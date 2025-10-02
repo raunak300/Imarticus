@@ -1,0 +1,55 @@
+:root {
+  --green-main: #004d40;   /* Dark Green */
+  --green-hover: #00695c;  /* Slightly lighter green */
+  --white: #ffffff;
+}
+
+/* Center card */
+.login-card {
+  width: 24rem;
+  border: 2px solid var(--green-main);
+  border-radius: 12px;
+  background-color: var(--white);
+}
+
+/* Green text */
+.text-green {
+  color: var(--green-main) !important;
+}
+
+/* Green input borders */
+.border-green {
+  border: 1px solid var(--green-main) !important;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+}
+
+.border-green:focus {
+  border-color: var(--green-hover) !important;
+  box-shadow: 0 0 5px rgba(0, 105, 92, 0.4);
+  outline: none;
+}
+
+/* Button styling */
+.btn-green {
+  background-color: var(--green-main) !important;
+  color: var(--white) !important;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 0.6rem;
+  transition: 0.3s ease;
+}
+
+.btn-green:hover {
+  background-color: var(--green-hover) !important;
+}
+
+/* Signup link */
+p span {
+  color: var(--green-main);
+}
+
+p span:hover {
+  text-decoration: underline;
+  color: var(--green-hover);
+}
