@@ -10,7 +10,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 const cors=require('cors');
 const corsOptions={
-    origin: 'https://imarticus-proj-388xpqwf0-raunak-tomars-projects.vercel.app',
+    origin: '*',
    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
    credentials: true,
 
