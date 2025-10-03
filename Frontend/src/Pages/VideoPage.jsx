@@ -8,6 +8,7 @@ const VideoPage = () => {
   const [role, setRole] = useState(null);
   const [documents, setDocuments] = useState([]);
   const [overlayText, setOverlayText] = useState(null);
+  const [message, setMessage] = useState(null); // success/error messages
   const navigate = useNavigate();
 
   // Predefined videos
@@ -18,32 +19,39 @@ const VideoPage = () => {
     { title: "ML Video 4", url: "https://www.youtube.com/embed/6dqAwh2MCg0" },
   ];
 
-  // check auth on mount
+  // check auth on mount + fetch docs
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuthAndDocs = async () => {
       try {
         const res = await axios.get("http://localhost:3000/api/auth/check", {
           withCredentials: true,
         });
+
         if (res.status !== 200) {
           navigate("/login");
         } else {
           setRole(res.data.user.role);
-          setDocuments(res.data.documents || []);
+
+          // Fetch documents separately
+          const docRes = await axios.get("http://localhost:3000/api/docs/get", {
+            withCredentials: true,
+          });
+          console.log(docRes)
+          setDocuments(docRes.data.documents || []);
         }
       } catch (err) {
-        console.error("Auth check failed", err);
+        console.error("Auth/docs fetch failed", err);
         navigate("/login");
       }
     };
-    checkAuth();
+    checkAuthAndDocs();
   }, [navigate]);
 
   // handle document summarise
-  const handleSummarise = async (docId) => {
+  const handleSummarise = async (docid) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/docs/summarise/${docId}`
+        `http://localhost:3000/api/summarise/docs/${docid}`
       );
       setOverlayText(res.data.summary);
     } catch (err) {
@@ -53,24 +61,38 @@ const VideoPage = () => {
 
   // handle document upload (admin)
   const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    e.preventDefault();
+    const file = e.target.document?.files[0];
+    if (!file) {
+      setMessage({ type: "danger", text: "Please select a file first." });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("document", file);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/docs/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setDocuments([...documents, res.data.document].slice(-5));
+      const res = await axios.post(
+        "http://localhost:3000/api/docs/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
+      );
+
+      setDocuments((prev) => [...prev, res.data.document].slice(-5));
+      setMessage({ type: "success", text: "Document uploaded successfully!" });
+      e.target.reset(); // reset file input
     } catch (err) {
       console.error("Upload failed", err);
+      setMessage({ type: "danger", text: "Upload failed. Try again." });
     }
   };
 
   return (
     <div className="video-page">
-        <Nav />
+      <Nav />
       <h2 className="video-title">Machine Learning Course Videos</h2>
 
       {/* Video Grid */}
@@ -92,24 +114,24 @@ const VideoPage = () => {
       </div>
 
       {/* Role-specific UI */}
-      {role === "student" && (
+      {role === "user" && (
         <div className="student-section">
           <h3 className="section-title">Uploaded Documents</h3>
           {documents.length === 0 ? (
             <p>No documents yet</p>
           ) : (
             documents.map((doc) => (
-              <div key={doc.id} className="document-item">
+              <div key={doc._id} className="document-item">
                 <a
-                  href={`http://localhost:3000/uploads/${doc.filename}`}
+                  href={`http://localhost:3000${doc.link}`}
                   target="_blank"
                   rel="noreferrer"
                   className="document-link"
                 >
-                  {doc.originalname}
+                  {doc.name}
                 </a>
                 <button
-                  onClick={() => handleSummarise(doc.id)}
+                  onClick={() => handleSummarise(doc._id)}
                   className="summarise-btn"
                 >
                   Summarise
@@ -123,7 +145,21 @@ const VideoPage = () => {
       {role === "admin" && (
         <div className="admin-section">
           <h3 className="section-title">Add Document</h3>
-          <input type="file" onChange={handleUpload} className="file-input" />
+
+          {/* Alert message */}
+          {message && (
+            <div className={`alert alert-${message.type}`} role="alert">
+              {message.text}
+            </div>
+          )}
+
+          {/* Upload form */}
+          <form onSubmit={handleUpload} encType="multipart/form-data">
+            <input type="file" name="document" className="file-input" />
+            <button type="submit" className="btn btn-success mt-2">
+              Submit
+            </button>
+          </form>
         </div>
       )}
 

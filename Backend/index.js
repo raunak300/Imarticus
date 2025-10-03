@@ -17,8 +17,14 @@ const corsOptions={
 }
 app.use(cors(corsOptions));
 
-const authRoutes=require('./routes/authroutes')
+const authRoutes=require('./routes/authRoutes')
 app.use('/api/auth',authRoutes)
+
+const docsRoutes=require('./routes/docsroutes')
+app.use('/api/docs',docsRoutes)
+
+const sumRoutes=require('./routes/sumrotues')
+app.use('/api/summarise',sumRoutes)
 
 app.listen(3000,(req,res)=>{
     console.log("listening");
