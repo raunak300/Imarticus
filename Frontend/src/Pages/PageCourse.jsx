@@ -2,32 +2,11 @@ import React from 'react'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 import Courses from '../components/Courses'
-
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 const PageCourse = () => {
-      useEffect(() => {
-          const checkAuthAndRedirect = async () => {
-              try {
-                
-  
-                  const res = await fetch("https://imarticus.onrender.com/api/auth/check", {
-                      method: "GET",
-                      credentials: "include",
-                  });
-  
-                     
-                      navigate("/", { replace: true });
-                  
-                  
-                  // If status is 200, user is authenticated, so they remain on /home
-              } catch (err) {
-                  console.error("Home auth check failed:", err);
-                  navigate("/", { replace: true });
-              }
-          };
-  
-          checkAuthAndRedirect();
-          
-      }, [navigate]); // Dependency on navigate hook
+  const navigate=useNavigate()
+     
   
   return (
     <div>
