@@ -13,12 +13,12 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const response = await  axios.post("http://localhost:3000/api/signup",
+      const response = await  axios.post("http://localhost:3000/api/auth/signup",
         {name,email,password}
       )
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.status===201) {
+        const data = await response.data;
         console.log("Signup success:", data);
         navigate("/home");
       } else {

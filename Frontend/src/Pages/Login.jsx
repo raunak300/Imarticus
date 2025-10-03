@@ -10,24 +10,24 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post("http://localhost:3000/api/login",
-        {email,password}
-      )
+const handleLogin = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/auth/login",
+      { email, password },
+      { withCredentials: true } // ✅ needed if backend uses cookies
+    );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Login success:", data);
-        // navigate to dashboard or home page
-        navigate("/home");
-      } else {
-        console.error("Login failed:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
+    console.log("Login success:", response.data);
+    navigate("/home");
+  } catch (error) {
+    if (error.response) {
+      console.error("Login failed:", error.response.data.message);
+    } else {
+      console.error("Error during login:", error.message);
     }
-  };
+  }
+};
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">

@@ -1,0 +1,143 @@
+.video-page {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+}
+
+.video-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.video-section {
+  margin-bottom: 24px;
+}
+
+.video-input {
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin-right: 8px;
+  width: 250px;
+}
+
+.video-list {
+  margin-top: 12px;
+}
+
+.video-link {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.student-section,
+.admin-section {
+  margin-top: 20px;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.document-link {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.summarise-btn {
+  padding: 6px 12px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.summarise-btn:hover {
+  background: #15803d;
+}
+
+.file-input {
+  margin-top: 8px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  position: relative;
+}
+
+.overlay-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+
+.video-page {
+  padding: 20px;
+}
+
+.video-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 side by side */
+  gap: 20px;
+}
+
+.video-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.video-name {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive: stack videos on smaller screens */
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
