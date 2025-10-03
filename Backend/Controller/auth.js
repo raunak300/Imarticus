@@ -90,4 +90,24 @@ const check = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, check };
+const logout = async (req, res) => {
+  try {
+    // Clear the 'token' cookie by setting an expiration date in the past
+    // The options (sameSite, secure) must match the options used when setting the cookie (login/signup)
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0), // Set expiration to a past time
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    // Send success response
+    res.status(200).send({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Logout error:", error);
+    res.status(500).send({ message: "Internal Server Error during logout" });
+  }
+};
+
+
+module.exports = { signup, login, check,logout };
