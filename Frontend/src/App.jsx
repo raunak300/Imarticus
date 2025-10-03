@@ -15,7 +15,7 @@ function AppWrapper() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/auth/check", {
+        const res = await fetch("https://imarticus.onrender.com/api/auth/check", {
           method: "GET",
           credentials: "include",
         });

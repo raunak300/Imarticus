@@ -9,11 +9,11 @@ const Login = () => {
   // separate states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const HOST="https://imarticus.onrender.com"
 const handleLogin = async () => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
+      `${HOST}/api/auth/login`,
       { email, password },
       { withCredentials: true } // ✅ needed if backend uses cookies
     );

@@ -6,10 +6,10 @@ import { CheckCircle } from "lucide-react";
 
 const HeroSec = () => {
   const navigate = useNavigate();
-
+  const HOST="https://imarticus.onrender.com"
   const handleEnroll = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/auth/check", {
+      const res = await fetch(`${HOST}/api/auth/check`, {
         method: "GET",
         credentials: "include", // important if using cookies
       });

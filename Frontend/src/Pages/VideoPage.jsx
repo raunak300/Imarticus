@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "../styles/video.css";
 import Nav from "../components/Nav";
 
+
 const VideoPage = () => {
+  const HOST="https://imarticus.onrender.com"
   const [role, setRole] = useState(null);
   const [documents, setDocuments] = useState([]);
   const [overlayText, setOverlayText] = useState(null);
@@ -23,7 +25,7 @@ const VideoPage = () => {
   useEffect(() => {
     const checkAuthAndDocs = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/check", {
+        const res = await axios.get(`${HOST}/api/auth/check`, {
           withCredentials: true,
         });
 
@@ -33,7 +35,7 @@ const VideoPage = () => {
           setRole(res.data.user.role);
 
           // Fetch documents separately
-          const docRes = await axios.get("http://localhost:3000/api/docs/get", {
+          const docRes = await axios.get(`${HOST}/api/docs/get`, {
             withCredentials: true,
           });
           console.log(docRes)
@@ -51,7 +53,7 @@ const VideoPage = () => {
   const handleSummarise = async (docid) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/summarise/docs/${docid}`
+        `${HOST}/api/summarise/docs/${docid}`
       );
       setOverlayText(res.data.summary);
     } catch (err) {
@@ -73,7 +75,7 @@ const VideoPage = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/docs/upload",
+        `${HOST}/api/docs/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -123,7 +125,7 @@ const VideoPage = () => {
             documents.map((doc) => (
               <div key={doc._id} className="document-item">
                 <a
-                  href={`http://localhost:3000${doc.link}`}
+                  href={`${HOST}${doc.link}`}
                   target="_blank"
                   rel="noreferrer"
                   className="document-link"

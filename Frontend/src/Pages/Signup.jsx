@@ -5,7 +5,7 @@ import "../styles/Login.css"; // reusing login styles
 
 const Signup = () => {
   const navigate = useNavigate();
-
+  const HOST="https://imarticus.onrender.com"
   // separate states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const response = await  axios.post("http://localhost:3000/api/auth/signup",
+      const response = await  axios.post(`${HOST}/api/auth/signup`,
         {name,email,password}
       )
 
