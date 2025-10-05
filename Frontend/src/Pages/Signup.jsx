@@ -20,7 +20,7 @@ const Signup = () => {
       if (response.status===201) {
         const data = await response.data;
         console.log("Signup success:", data);
-        navigate("/home");
+        navigate("/");
       } else {
         console.error("Signup failed:", response.statusText);
       }

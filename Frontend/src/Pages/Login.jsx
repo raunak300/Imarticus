@@ -19,7 +19,7 @@ const handleLogin = async () => {
     );
 
     console.log("Login success:", response.data);
-    navigate("/home");
+    navigate("/");
   } catch (error) {
     if (error.response) {
       console.error("Login failed:", error.response.data.message);
