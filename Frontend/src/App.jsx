@@ -21,7 +21,8 @@ function AppWrapper() {
         });
 
         if (res.status === 200) {
-          navigate("/home", { replace: true });
+          // 👇 redirect to `/` instead of `/home`
+          navigate("/", { replace: true });
         } else {
           navigate("/login", { replace: true });
         }
@@ -34,7 +35,6 @@ function AppWrapper() {
     };
 
     checkAuth();
-    // 👇 empty dependency array means it runs only once (on mount)
   }, []);
 
   if (loading) {
@@ -43,13 +43,13 @@ function AppWrapper() {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />          {/* 👈 home now at `/` */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/home" element={<Home />} />
       <Route path="/all-course" element={<SellCourses />} />
       <Route path="/course/:courseName" element={<PageCourse />} />
       <Route path="/course/:courseName/video" element={<VideoPage />} />
-      <Route path="*" element={<Home />} />
+      <Route path="*" element={<Home />} />          {/* fallback */}
     </Routes>
   );
 }
